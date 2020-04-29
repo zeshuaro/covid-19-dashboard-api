@@ -26,7 +26,7 @@ from app.routers import (
 )
 from app.routers.auth import get_current_active_user
 
-app = FastAPI()
+app = FastAPI(title="Covid-19 Dashboard API")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # TODO: update origins for deployment
