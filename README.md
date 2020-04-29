@@ -1,4 +1,4 @@
-# Covid Dashboard API
+# Covid-19 Dashboard API
 
 ## Getting Started
 
