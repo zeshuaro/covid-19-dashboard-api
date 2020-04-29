@@ -5,7 +5,8 @@ import requests
 from collections import defaultdict
 from fastapi import APIRouter, Query, Path
 
-from app import const, models, utils
+from app import const, utils
+from app.models.response_models import *
 from app.routers import helpers
 
 router = APIRouter()
@@ -14,7 +15,7 @@ router = APIRouter()
 @router.get(
     "/cumulative/bar-chart-race",
     summary="Cumulative country historical statistics for bar chart race",
-    response_model=models.BarChartRaceCountryHist,
+    response_model=BarChartRaceCountryHist,
 )
 def get_bar_chart_race_cumulative(
     last_days: str = Query(
@@ -31,7 +32,7 @@ def get_bar_chart_race_cumulative(
 @router.get(
     "/cumulative/line-chart",
     summary="Cumulative country historical statistics for line chart",
-    response_model=models.LineChartCountryHist,
+    response_model=LineChartCountryHist,
 )
 def get_grouped_line_chart_cumulative(
     last_days: str = Query(
@@ -53,7 +54,7 @@ def get_grouped_line_chart_cumulative(
 @router.get(
     "/{query}/cumulative/line-chart",
     summary="Cumulative historical statistics for a specific country for line chart",
-    response_model=models.SingleLineChartHist,
+    response_model=SingleLineChartHist,
 )
 def get_single_line_chart_cumulative(
     query: str = Path(
@@ -82,7 +83,7 @@ def get_single_line_chart_cumulative(
 @router.get(
     "/new/bar-chart-race",
     summary="New country historical statistics for bar chart race",
-    response_model=models.BarChartRaceCountryHist,
+    response_model=BarChartRaceCountryHist,
 )
 def get_bar_chart_race_new(
     last_days: str = Query(
@@ -99,7 +100,7 @@ def get_bar_chart_race_new(
 @router.get(
     "/new/line-chart",
     summary="New country historical statistics for line chart",
-    response_model=models.LineChartCountryHist,
+    response_model=LineChartCountryHist,
 )
 def get_grouped_line_chart_new(
     last_days: str = Query(
@@ -121,7 +122,7 @@ def get_grouped_line_chart_new(
 @router.get(
     "/{query}/new/line-chart",
     summary="New historical statistics for a specific country for line chart",
-    response_model=models.SingleLineChartHist,
+    response_model=SingleLineChartHist,
 )
 def get_single_line_chart_new(
     query: str = Path(

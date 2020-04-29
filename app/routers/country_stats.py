@@ -4,7 +4,8 @@ from collections import defaultdict
 from fastapi import APIRouter, Path, Query
 from sortedcontainers import SortedList
 
-from app import const, models
+from app import const
+from app.models.response_models import *
 
 router = APIRouter()
 STATS_TYPES = [
@@ -23,7 +24,7 @@ STATS_TYPES = [
 @router.get(
     "/{query}/stats",
     summary="Country statistics for a specific country",
-    response_model=models.CountryStats,
+    response_model=CountryStats,
 )
 def get_country_stats(
     query: str = Path(
@@ -51,7 +52,7 @@ def get_country_stats(
 @router.get(
     "/world-map",
     summary="Country statistics for world map",
-    response_model=models.WorldMapCountry,
+    response_model=WorldMapCountry,
 )
 def get_world_map(
     top_n: int = Query(

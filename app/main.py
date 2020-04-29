@@ -1,19 +1,30 @@
 import datetime as dt
+import jwt
 import pycountry
 import requests
 
 from collections import defaultdict
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import (
+    OAuth2PasswordBearer,
+    OAuth2PasswordRequestForm,
+    SecurityScopes,
+)
 from fastapi.staticfiles import StaticFiles
+from jwt import PyJWTError
+from passlib.context import CryptContext
 from sortedcontainers import SortedList
 
+from app.models.auth_models import *
 from app.routers import (
+    auth,
     global_stats,
     country_stats,
     global_historical,
     country_historical,
 )
+from app.routers.auth import get_current_active_user
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -35,14 +46,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(global_stats.router, prefix="/global", tags=["Global"])
+app.include_router(auth.router, tags=["Auth"])
 app.include_router(
-    global_historical.router, prefix="/global/historical", tags=["Global Historical"],
+    global_stats.router,
+    prefix="/global",
+    tags=["Global"],
+    dependencies=[Depends(get_current_active_user)],
 )
-app.include_router(country_stats.router, prefix="/country", tags=["Country"])
-
+app.include_router(
+    global_historical.router,
+    prefix="/global/historical",
+    tags=["Global Historical"],
+    dependencies=[Depends(get_current_active_user)],
+)
+app.include_router(
+    country_stats.router,
+    prefix="/country",
+    tags=["Country"],
+    dependencies=[Depends(get_current_active_user)],
+)
 app.include_router(
     country_historical.router,
     prefix="/country/historical",
     tags=["Country Historical"],
+    dependencies=[Depends(get_current_active_user)],
 )

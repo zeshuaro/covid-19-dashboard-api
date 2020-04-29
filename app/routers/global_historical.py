@@ -4,8 +4,9 @@ import requests
 from collections import defaultdict
 from fastapi import APIRouter
 
-from app import const, models, utils
+from app import const, utils
 from app.routers import helpers
+from app.models.response_models import *
 
 router = APIRouter()
 
@@ -13,7 +14,7 @@ router = APIRouter()
 @router.get(
     "/cumulative/line-chart",
     summary="Cumulative global historical statistics for line chart",
-    response_model=models.SingleLineChartHist,
+    response_model=SingleLineChartHist,
 )
 def get_line_chart_cumulative():
     r = requests.get(const.BASE_URL + "/v2/historical/all?lastdays=all")
@@ -28,7 +29,7 @@ def get_line_chart_cumulative():
 @router.get(
     "/new/line-chart",
     summary="New global historical statistics for line chart",
-    response_model=models.SingleLineChartHist,
+    response_model=SingleLineChartHist,
 )
 def get_line_chart_new():
     r = requests.get(const.BASE_URL + "/v2/historical/all?lastdays=all")
