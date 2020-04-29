@@ -29,18 +29,19 @@ from app.routers.auth import get_current_active_user
 app = FastAPI(title="Covid-19 Dashboard API")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# TODO: update origins for deployment
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:3000",
+    "http://zeshuaro.github.io",
+    "https://zeshuaro.github.io",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
