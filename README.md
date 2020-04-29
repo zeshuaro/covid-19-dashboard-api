@@ -42,6 +42,7 @@ Obtain a hashed password with the following python code:
 ```python
 from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+password="your_password"
 print(pwd_context.hash(password))
 ```
 
