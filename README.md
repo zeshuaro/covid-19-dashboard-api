@@ -1,6 +1,6 @@
-# Covid-19 Dashboard API
+# COVID-19 Dashboard API
 
-A REST API client for the [Covid-19 Dasoboard](https://github.com/zeshuaro/covid-19-dashboard)
+A REST API client for the [COVID-19 Dasoboard](https://github.com/zeshuaro/covid-19-dashboard)
 
 ## Getting Started
 
