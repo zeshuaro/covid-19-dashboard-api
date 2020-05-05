@@ -71,6 +71,7 @@ class SingleLineChartHist(BaseModel):
 
 class BarChartRaceCountryHistSummary(BaseModel):
     labels: List[str]
+    colors: Dict[str, str]
     data: Dict[str, List[int]]
 
 

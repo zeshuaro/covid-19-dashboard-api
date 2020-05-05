@@ -41,13 +41,13 @@ def get_color_dicts(data):
     inner_dict = {}
     outer_colors = sns.color_palette("hls", len(data)).as_hex()
 
-    for i, outer_data in enumerate(data):
+    for i, outer_data in enumerate(sorted(data)):
         outer_dict[outer_data] = outer_colors[i]
         inner_list = [x for x in data[outer_data] if x is not None]
 
         if inner_list:
             inner_colors = sns.color_palette("hls", len(inner_list)).as_hex()
-            for j, innder_data in enumerate(inner_list):
+            for j, innder_data in enumerate(sorted(inner_list)):
                 inner_dict[innder_data] = inner_colors[j]
 
     return outer_dict, inner_dict

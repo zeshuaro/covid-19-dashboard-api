@@ -271,6 +271,7 @@ def get_response_stats(country_stats, dates, chart_type, is_new_stats):
     for stats_type in dates:
         line_chart_list = []
         sorted_dates = sorted(dates[stats_type])
+        country_colors = {}
 
         for country in country_stats:
             # Filtering top n results can result in some statistics unavailable
@@ -295,32 +296,22 @@ def get_response_stats(country_stats, dates, chart_type, is_new_stats):
                 else:
                     line_chart_data.append(new_value)
 
-            if chart_type == const.LINE_CHART:
+            if country in colors["countries"]:
+                color = colors["countries"][country]
+            else:
+                color = "#db5f57"
+
+            if chart_type == const.BAR_CHART_RACE:
+                country_colors[country] = color
+            elif chart_type == const.LINE_CHART:
                 line_chart_list.append(
-                    {
-                        "label": country,
-                        "color": colors["countries"][country],
-                        "data": line_chart_data,
-                    }
+                    {"label": country, "color": color, "data": line_chart_data,}
                 )
 
         stats[stats_type]["labels"] = [utils.format_date(x) for x in sorted_dates]
-        if chart_type == const.LINE_CHART:
+        if chart_type == const.BAR_CHART_RACE:
+            stats[stats_type]["colors"] = country_colors
+        elif chart_type == const.LINE_CHART:
             stats[stats_type]["datasets"] = line_chart_list
 
     return stats
-
-
-def add_formatted_dates(stats, dates):
-    """Add formatted dates to the final API response
-    
-    Arguments:
-        stats {dict} -- The final API response
-        dates {dict} -- The set of dates for each statistics
-    """
-    for stats_type in dates:
-        new_dates = []
-        for date in sorted(dates[stats_type]):
-            new_dates.append(utils.format_date(date))
-
-        stats[stats_type]["timeline"] = new_dates
